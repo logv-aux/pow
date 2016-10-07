@@ -133,6 +133,14 @@ bundles = [{
             'html-xml.js': ModuleFile('modules/highlight/html-xml.js'),
             'ir_black.css': ModuleFileData('modules/highlight/ir_black.css')})],
 }, {
+    'name': 'sections',
+    'header': '\n'.join([
+        'pow.sections: pow sections per slide',
+        'source code: http://github.com/logv/pow']),
+    'modules': [
+        Module('sections', 'modules/sections/pow.section.js')
+        ],
+}, {
     'name': 'mobile',
     'header': 'pow.mobile: Improved support and functionality on mobile devices.',
     'modules': [
