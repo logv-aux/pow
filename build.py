@@ -138,7 +138,7 @@ bundles = [{
         'pow.sections: pow sections per slide',
         'source code: http://github.com/logv/pow']),
     'modules': [
-        Module('sections', 'modules/sections/pow.section.js')
+        Module('sections', 'modules/sections/pow.sections.js')
         ],
 }, {
     'name': 'mobile',

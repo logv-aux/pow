@@ -86,5 +86,5 @@ function load_sections(slide) {
     }
   };
   slide.sections.next();
-};
+}
 pow.slides.on.show(load_sections);
