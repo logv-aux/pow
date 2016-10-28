@@ -1,7 +1,11 @@
 document.addEventListener('keydown', function(e) {
   var action = {
-    '38' : function () { pow.slide.sections.prev(); },
-    '40' : function () { pow.slide.sections.next(); }
+    '13' : function () { pow.slide.sections.next(); },
+    '32' : function () { pow.slide.sections.next(); },
+    '37' : function () { pow.slide.sections.prev(); },
+    '39' : function () { pow.slide.sections.next(); },
+    '33' : function () { pow.slides.go.prev(); },
+    '34' : function () { pow.slides.go.next(); }
   };
 
   var f = action[e.keyCode];
@@ -48,6 +52,10 @@ function load_sections(slide) {
           .stop()
           .fadeIn();
         this.refresh();
+      } else {
+        pow.slides.go.next();
+        this.index = 0;
+        this.refresh();
       }
     },
     prev: function() {
@@ -57,18 +65,21 @@ function load_sections(slide) {
         $(sections[this.index])
           .fadeIn();
         this.refresh();
+      } else {
+        pow.slides.go.prev();
+        this.index = 0;
+        this.refresh();
       }
     },
     refresh: function() {
-      var slider_height = parseInt(slideEl.height() / sections.length, 10)+30;
-      var slider_offset = slider_height * this.index;
-      if (sections.length == 1) {
-        slider_height = "100%";
-      }
+      var slider_height = slideEl.height() / (sections.length-1);
+      var slider_offset = parseInt(slider_height * this.index, 10);
+      if (sections.length == 1) { slider_height = "100%"; }
 
       slider.css({
         "height" : slider_height
       });
+
       slider.stop().animate({
         "top" : slider_offset
       });
