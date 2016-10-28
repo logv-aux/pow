@@ -20,6 +20,9 @@ function load_sections(slide) {
       sections = slideEl.find(".section"),
       slider = slideEl.find(".slider");
 
+  sections.hide();
+  slider.hide();
+
   if (slider.length == 0) {
     slider = $("<div class='slider'>");
     slider.css({
@@ -45,46 +48,51 @@ function load_sections(slide) {
   slide.sections = {
     index: -1,
     next: function() {
+      sections.hide();
       if (this.index < sections.length-1) {
-        sections.hide();
+        slider.show();
         this.index += 1;
         $(sections[this.index])
           .stop()
           .fadeIn();
         this.refresh();
       } else {
+        this.index = -1;
         pow.slides.go.next();
-        this.index = 0;
-        this.refresh();
       }
     },
     prev: function() {
+      sections.hide();
       if (this.index > 0) {
-        sections.hide();
+        slider.show();
         this.index -= 1;
         $(sections[this.index])
           .fadeIn();
         this.refresh();
       } else {
-        pow.slides.go.prev();
-        this.index = 0;
+        this.index = -1;
         this.refresh();
+
+        pow.slides.go.prev();
       }
     },
     refresh: function() {
-      var slider_height = slideEl.height() / (sections.length-1);
+      var slider_height = slideEl.outerHeight() / (sections.length);
       var slider_offset = parseInt(slider_height * this.index, 10);
-      if (sections.length == 1) { slider_height = "100%"; }
+      if (!sections.length || sections.length == 1) { slider_height = "100%"; }
 
       slider.css({
         "height" : slider_height
       });
 
       slider.stop().animate({
-        "top" : slider_offset
+        "top" : parseInt(slider_offset, 10)
       });
     }
   };
-  slide.sections.next();
+
+  if (sections.length >= 1) {
+    slide.sections.next();
+  }
 }
 pow.slides.on.show(load_sections);
